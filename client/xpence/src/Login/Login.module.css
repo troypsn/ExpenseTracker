@@ -1,0 +1,89 @@
+html{
+    font-family: 'VCR', monospace;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+    margin: 0;
+    padding: 0;
+}
+
+.pageContainer{
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 15rem;
+}
+
+.inputContainer{
+    font-size: 1rem;
+    gap: 1rem;
+    color: white;
+    display: flex;
+    flex-direction: row;
+    margin-top: 2rem;
+}
+
+.welcomeMessage{
+    font-size: 3rem;
+    color: white;
+    font-weight: 50px;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+}
+
+.inputContainer input{
+    width: 25vw;
+    text-align: center;
+    font-family: 'VCR', monospace;
+    font-size: 2rem;
+    border: none;
+    color: white;
+    background-color: transparent;
+    padding: 2rem 0.2rem;
+    overflow: auto;
+}
+
+::placeholder{
+    color: white;
+}
+
+::-ms-reveal {
+    filter: invert(50%) sepia(100%) saturate(1000%) hue-rotate(200deg); /* Example: changes color using CSS filters */
+    
+}
+
+.inputTitle{
+    font-size:10rem;
+   
+}
+
+.inputContainer input:focus{
+    outline: none;
+    border: none;
+    background-color: transparent;
+    border-color: transparent;
+}
+
+
+.submitButton{
+    text-align: center;
+    font-family: 'VCR', monospace;
+    font-size: 2.1rem;
+    border: none;
+    color: white;
+    background-color: transparent;
+    margin-top: 3rem;
+   
+}
+
+.submitButton:hover{
+    font-family: 'VCR', monospace;
+    border: none;
+    color: #0004ED;
+    background-color: white;
+}
