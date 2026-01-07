@@ -1,0 +1,59 @@
+@import '../assets/fonts.css';
+
+html{
+    font-family: 'VCR', monospace;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+    margin: 0;
+    padding: 0;
+}
+
+.pageContainer{
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.header{
+    color: white;
+    margin-top: 2rem;
+}
+
+.header h1{
+    font-weight: 75;
+    font-size: 5rem;
+} 
+
+.navbar{
+    width: 35vw;
+    display: flex;
+    color: white;
+    font-size: 3rem;
+    justify-content: space-evenly;
+    flex-direction: column;
+}
+
+.navbar h3{
+    font-weight: 500;
+    padding-left: 2rem;
+    transition: background-color 0.2s, ease 0.1s;
+    padding: 1.5rem 0rem;
+    padding-left: 2rem;
+} 
+
+.navbar a{
+    all:unset;
+} 
+
+.navbar h3:hover{
+    background-color: white;
+    color: #0004ED;
+} 
+
+.navbar h3:focus{
+    background-color: white;
+    color: #0004ED;
+} 
+
