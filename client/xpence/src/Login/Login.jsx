@@ -1,35 +1,55 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import styles from './Login.module.css';
+import { Link } from 'react-router-dom';
 
 function Login() {
 
-  const [username, setUsername] = useState("");
+  const [loginResult, setloginResult] = useState("");
 
 
+  function handleLogin(result){
+    const loginResultStyling = document.getElementsByClassName(styles.loginResult)[0];
+    loginResultStyling.style.color = "white";
+    console.log(result.data);
+    setloginResult(`Welcome, ${result.data.data.username}`);
+  }
 
-    
+  function handleLoginFailure(error){
+    console.error("Login failed", error);
+    const loginResultStyling = document.getElementsByClassName(styles.loginResult)[0];
+    loginResultStyling.style.color = "red";
+    setloginResult(`Login failed: ${error.response.data.message ? error.response.data.message : 'Server error'}`);
+  }
+
+
   // Handle form submission
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        try{                //axios post request to server
-            const result = await axios.post('http://localhost:5000/login', {
+        try{                
+          //axios post request to server
+            const result = await axios.post('http://localhost:5000/auth/login', {
             username: e.target.username.value,
             password: e.target.password.value,
           });
 
-          //returns if user exists in database
-          console.log(result.data);
-          setUsername(`Welcome, ${result.data.data.username}`);
+            console.log(result.data);
+            handleLogin(result);
+          
         } catch (error) {
-          console.error("Login failed", error);
+            handleLoginFailure(error);
         }
         
     }
 
   return (
     <div className={styles.pageContainer}>
+      <nav className={styles.navbar}>
+        <Link to={'/'} className={styles.linkStyle}><h3>HOME</h3></Link>
+          <Link to={'/login'} className={styles.linkStyle}><h3>LOGIN</h3></Link>
+          <Link to={'/signup'} className={styles.linkStyle}><h3>SIGN UP</h3></Link>
+          <Link to={'/about'} ><h3>ABOUT</h3></Link>
+      </nav>
       <form onSubmit={handleSubmit}>
         <div className={styles.inputContainer}>  
             <input type="text" placeholder='Username' name="username" required/>
@@ -40,7 +60,7 @@ function Login() {
         </div>
         <button type="submit" className={styles.submitButton}>Login</button>
       </form>
-      <h1 className={styles.welcomeMessage}>{username}</h1>
+      <h1 className={styles.loginResult}>{loginResult}</h1>
     </div>
   )
 }
