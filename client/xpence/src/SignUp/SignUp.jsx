@@ -6,13 +6,10 @@ import { useState } from 'react';
 
 
 export default function SignUp() {
+  
+  const [signUpResult, setsignUpResult] = useState("");
 
-  function handleSignUpResult(result){
-    const signUpResultStyling = document.getElementsByClassName(styles.SignUpResult)[0];
-    signUpResultStyling.style.color = "white";
-    console.log(result.data);
-    setsignUpResult(`Sign Up Successful! You can now log in, ${result.data.data.username}`);
-  }
+ 
 
   function handleSignUpFailure(error){
     console.error("Sign Up failed", error);
@@ -20,21 +17,31 @@ export default function SignUp() {
     signUpResultStyling.style.color = "red";
     setsignUpResult(`Sign Up failed: ${error.response.data.message ? error.response.data.message : 'Server error'}`);
   }
-  const [signUpResult, setsignUpResult] = useState("");
+  
 
   const handleSubmit = async (e) => {
         e.preventDefault();
-        try{                
-          //axios post request to server
-            const result = await axios.post('http://localhost:5000/auth/signup', {
-            username: e.target.username.value,
-            password: e.target.password.value,
-          });
-            console.log(result.data);
-            handleSignUpResult(result);
-        } catch (error) {
-            handleSignUpFailure(error);
+
+        if (e.target.password.value === e.target.confirmPassword.value){
+            try{                
+            //axios post request to server
+              const result = await axios.post('http://localhost:5000/auth/signup', {
+              username: e.target.username.value,
+              password: e.target.password.value,
+            });
+              const signUpResultStyling = document.getElementsByClassName(styles.SignUpResult)[0];
+              signUpResultStyling.style.color = "white";
+              console.log(result.data);
+              setsignUpResult(`Sign Up Successful! You can now log in, ${result.data.data.username}`);
+          } catch (error) {
+              handleSignUpFailure(error);
+          }
+        } else {
+          const signUpResultStyling = document.getElementsByClassName(styles.SignUpResult)[0];
+          signUpResultStyling.style.color = "red";
+          setsignUpResult(`Sign Up failed: Passwords do not match`);
         }
+        
 }
 
   return (
@@ -48,13 +55,13 @@ export default function SignUp() {
 
       <form onSubmit={handleSubmit}>
         <div className={styles.inputContainer}>  
-            <input type="text" placeholder='Username' name="username" required/>
+            <label htmlFor="username">Username:</label><input type="text" placeholder='' name="username" required/>
         </div>
         <div className={styles.inputContainer}> 
-          <input type="password" placeholder='Password' name="password" required/>
+          <label htmlFor="password">Password:</label><input type="password" placeholder='' name="password" required/>
         </div>
         <div className={styles.inputContainer}> 
-          <input type="password" placeholder='Confirm Password' name="confirmPassword" required/>
+          <label htmlFor="confirmPassword">Confirm Password:</label>< input type="password" placeholder='' name="confirmPassword" required/>
         </div>
         <button type="submit" className={styles.submitButton}>Sign Up</button>
       </form>

@@ -18,32 +18,30 @@ const isLoggedIn = (req, res) => {
 }
 
 const signUpUser = (req, res) => {
-            const {username, password} = req.body;
-
-            const ifExists = db.query(`SELECT * FROM users WHERE username = "${username}"`, (err, result) => {
+        const {username, password} = req.body;
+           db.query(`SELECT * FROM users WHERE username = "${username}"`, (err, result) => {
                 if (err) {
                     console.error("Database query error", err);
                     return res.status(500).json({success: false, message: "Internal server error"});
                 }
                 if (result.length > 0) {
-                    return res.status(409).json({success: false, message: "Username already exists"});
-                }
+                    return res.status(409).json({success: false, message: "Username in use, please choose another."});
+                } 
             });
 
-            if (ifExists){
                 const query = `INSERT INTO users (username, password_hash) VALUES ("${username}", "${password}")`;
                 db.query(query, (err, result)=>{
                     if (err) {
                         console.error("Database insertion error", err);
                         return res.status(500).json({success: false, message: "Internal server error"});
                     } else {
-                        return res.status(201).json({success: true, message: result});
+                        return res.status(201).json({success: true, data: {"username": username}, message: result});
                     }
                 });
             }
             
 
-}
+
 
 module.exports = 
 { isLoggedIn, 

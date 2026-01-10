@@ -52,15 +52,16 @@ function Login() {
       </nav>
       <form onSubmit={handleSubmit}>
         <div className={styles.inputContainer}>  
-            <input type="text" placeholder='Username' name="username" required/>
+           <label htmlFor="username">Username:</label> <input type="text" placeholder='' name="username" required/>
         </div>
         <div className={styles.inputContainer}>
           
-          <input type="password" placeholder='Password' name="password" required/>
+          <label htmlFor="password">Password:</label> <input type="password" placeholder='' name="password" required/>
         </div>
         <button type="submit" className={styles.submitButton}>Login</button>
+         <h1 className={styles.loginResult}>{loginResult}</h1>
       </form>
-      <h1 className={styles.loginResult}>{loginResult}</h1>
+     
     </div>
   )
 }

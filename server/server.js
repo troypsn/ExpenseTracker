@@ -2,7 +2,7 @@ const express = require ('express')
 const mysql = require ('mysql')
 const cors = require ('cors')
 const path = require('path')
-const Authentication = require('./routes/Authentication')
+const LoginSignup = require('./routes/LoginSignup.js')
 const db = require ('./db')
 const app = express();
 
@@ -14,7 +14,7 @@ app.use(express.json())
 const port = 5000
 
 
-app.use('/auth', Authentication)
+app.use('/auth', LoginSignup)
 
 app.get('/',(req, res)=>{
     res.status(200).send('Welcome to the Expense Tracker API')

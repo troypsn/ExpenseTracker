@@ -13,7 +13,7 @@ html{
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 15rem;
+  
 }
 
 .inputContainer{
@@ -22,11 +22,12 @@ html{
     color: white;
     display: flex;
     flex-direction: row;
-    margin-top: 2rem;
+    margin-top:2rem;
 }
 
 .loginResult{
-    font-size: 3rem;
+     text-align: center;
+    font-size: 2rem;
     color: white;
     font-weight: 50px;
 }
@@ -35,26 +36,39 @@ html{
     color: #0004ED;
     background-color: white;
 }
-
 form{
+    margin-top: 20vh;
+    height: 100vh;
     display: flex;
     flex-direction: column;
+    justify-content: flex-start;
+    max-width: 40vw;
+}
+
+.inputContainer{
+    display: flex;
+    flex-direction: row;
+    gap: none;
+}
+
+.inputContainer label{
+    font-size: 1.5rem;
 }
 
 .inputContainer input{
     width: 25vw;
-    text-align: center;
+    font-size: 1.5rem;
+    text-align: left;
     font-family: 'VCR', monospace;
-    font-size: 2rem;
     border: none;
-    color: white;
     background-color: transparent;
-    padding: 2rem 0.2rem;
+    color: white;
     overflow: auto;
+   
 }
 
 ::placeholder{
-    color: white;
+    color: rgb(255, 255, 255);
 }
 
 ::-ms-reveal {
