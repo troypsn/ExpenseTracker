@@ -64,8 +64,9 @@ export default function SignUp() {
           <label htmlFor="confirmPassword">Confirm Password:</label>< input type="password" placeholder='' name="confirmPassword" required/>
         </div>
         <button type="submit" className={styles.submitButton}>Sign Up</button>
+        <h1 className={styles.SignUpResult}>{signUpResult}</h1>
       </form>
-      <h1 className={styles.SignUpResult}>{signUpResult}</h1>
+      
     </div>
   )
 }

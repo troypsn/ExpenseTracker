@@ -35,13 +35,11 @@ const signUpUser = (req, res) => {
                         console.error("Database insertion error", err);
                         return res.status(500).json({success: false, message: "Internal server error"});
                     } else {
-                        return res.status(201).json({success: true, data: {"username": username}, message: result});
+                        return res.status(201).json({success: true, data: {"username": username}, message: result});    
                     }
                 });
             }
             
-
-
 
 module.exports = 
 { isLoggedIn, 
