@@ -1,4 +1,4 @@
-@import '../assets/fonts.css';
+@import '.././assets/fonts.css';
 
 
 .pageContainer{
@@ -9,6 +9,7 @@
     position: relative;
     padding: 0;
     color: white;
+    max-width: 1920px;
 }
 
 .header{
@@ -66,11 +67,15 @@
     justify-content: space-around;
 }
 
+.controls a{
+    all: unset;
+}
+
 .shortcutsContainer{
     display: flex;
     flex-direction: row;
     justify-content: center;
-    gap: 5.3vw;
+    gap: 6rem;
     margin: 0rem 15vw;
 }
 

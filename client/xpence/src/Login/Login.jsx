@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import styles from './Login.module.css';
-import { Link } from 'react-router-dom';
-
+import { Link, useNavigate } from 'react-router-dom';
 function Login() {
 
   const [loginResult, setloginResult] = useState("");
+  const navigate = useNavigate();
 
 
   function handleLogin(result){
@@ -32,9 +32,12 @@ function Login() {
             username: e.target.username.value,
             password: e.target.password.value,
           });
-
+            localStorage.setItem('username',   e.target.username.value);
+            localStorage.setItem('password',   e.target.password.value);
             console.log(result.data);
             handleLogin(result);
+            navigate('/home', { replace: true });
+           
           
         } catch (error) {
             handleLoginFailure(error);
