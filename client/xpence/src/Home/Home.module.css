@@ -48,6 +48,15 @@
     width: 500px;
 }
 
+.screenTitle{
+    font-size: 1.5rem;
+}
+.timeline{
+    font-size: 1rem;
+    margin: 0rem;
+    padding: 0em;
+}
+
 .balance{
     font-size: 4rem;
 }
@@ -80,7 +89,6 @@
 }
 
 .shortcut{
-   
     outline: 4px solid white;
     padding: clamp(1rem, 2.6vw, 2.5rem);
     display: flex;
@@ -102,6 +110,16 @@
     font-size: 2rem;
     margin: 0;
     padding: 0;
+}
+
+.shortcutsButton{
+    background: none;
+	color: inherit;
+	border: none;
+	padding: 0;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
 }
 
 @media screen and (max-width: 900px){

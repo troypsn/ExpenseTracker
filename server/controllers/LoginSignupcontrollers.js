@@ -39,7 +39,7 @@ const signUpUser = (req, res) => {
                     }
                 });
             }
-            
+
 
 module.exports = 
 { isLoggedIn, 
