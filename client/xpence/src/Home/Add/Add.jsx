@@ -39,16 +39,24 @@ function Add (){
         if (!shortcutEditMode){
             // Add by itself
             try {
-            const result = await axios.post('http://localhost:5000/home/addexpense', {
-            title: title,
-            description: description,
-            amount: amount,
-            username: localStorage.getItem("username")
-          });
-          console.log(result);
-        } catch (err){
-            console.log(err);
-        }
+                const result = await axios.post('http://localhost:5000/home/addexpense', {
+                title: title,
+                description: description,
+                amount: amount,
+                userId: localStorage.getItem("userId")
+                });
+                console.log(result);
+
+            } catch (err){
+                console.log(err);
+            }
+        } else if (shortcutEditMode){
+            // Edit shortcut
+            try {
+                // input edit request here
+            } catch (err){
+                console.log(err);
+            }
         }
         
         

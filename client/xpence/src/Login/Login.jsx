@@ -34,6 +34,8 @@ function Login() {
           });
             localStorage.setItem('username',   e.target.username.value);
             localStorage.setItem('password',   e.target.password.value);
+            localStorage.setItem('userId', result.data.data.userID);
+            console.log(result.data.data.userID);
             console.log(result.data);
             handleLogin(result);
             navigate('/home', { replace: true });
