@@ -2,8 +2,7 @@ import { Link, useNavigate } from "react-router-dom"
 import styles from './Home.module.css';
 import { useEffect, useState, useRef } from "react";
 import axios from "axios";
-import LongPressButton from "../Utility/LongPressButton";
-import Add from "./Add/Add";
+
 
 function Home() {
   const navigate = useNavigate();
@@ -30,42 +29,43 @@ useEffect(()=>{
  
 
  const shortcuts = [
-    {
-      id : 1,
-      name: "SNACK",
-      desc: "Eat",
-      amount: 50
-    },
-    {
-      id : 2,
-      name: "FOOD",
-      desc: "Eat",
-      amount: 100
-    },
-    {
-      id : 3,
-      name: "BILLS",
-      desc: "Electricity",
-      amount: 500
-    },
-    {
-      id : 4,
-      name: "RENT",
-      desc: "Dorm",
-      amount: 2000
-    },
-    {
-      id : 5,
-      name: "COMMUTE",
-      desc: "Jeep",
-      amount: 75
-    },
-    {
-      id : 6,
-      name: "COFFEE",
-      desc: "Beverage",
-      amount: 100
-    }]
+    // {
+    //   id : 1,
+    //   name: "SNACK",
+    //   desc: "Eat",
+    //   amount: 50
+    // },
+    // {
+    //   id : 2,
+    //   name: "FOOD",
+    //   desc: "Eat",
+    //   amount: 100
+    // },
+    // {
+    //   id : 3,
+    //   name: "BILLS",
+    //   desc: "Electricity",
+    //   amount: 500
+    // },
+    // {
+    //   id : 4,
+    //   name: "RENT",
+    //   desc: "Dorm",
+    //   amount: 2000
+    // },
+    // {
+    //   id : 5,
+    //   name: "COMMUTE",
+    //   desc: "Jeep",
+    //   amount: 75
+    // },
+    // {
+    //   id : 6,
+    //   name: "COFFEE",
+    //   desc: "Beverage",
+    //   amount: 100
+    // }
+  ]
 
     function handleShortcutClick(shortcutName, shortcutDesc, shortcutAmount, shortcutId){
       if(shortcutEditMode){
@@ -85,6 +85,7 @@ useEffect(()=>{
     { label: "THIS WEEK", value: "week" },
     { label: "THIS MONTH", value: "month" },
     { label: "THIS YEAR", value: "year" },
+    { label: "ALL TIME" , value: "all" }
   ];
   
 
@@ -96,8 +97,8 @@ useEffect(()=>{
             const result = await axios.get(`http://localhost:5000/home/totalexpense?userId=${userId}&time=${time}`);
 
             console.log(result);
-
-            setAmount(result.data.data.amount);
+            const fetchedAmount = result.data.data.amount ? result.data.data.amount : 0;
+            setAmount(fetchedAmount);
 
           } catch (error) {
             console.log(error);
