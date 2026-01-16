@@ -15,9 +15,12 @@ function Add (){
     const [amount, setAmount] = useState("");
     const [id, setId] = useState(null);
     const [shortcutEditMode, setShortcutEditMode] = useState(false);
+    const [resultText, setResultText] = useState("");
 
 
      useEffect(() => {
+
+        //If in edit shortcut mode, the shortcut details is passed through from Homejsx to here
         if (location.state?.title?.shortcutName) {
             setShortcutEditMode(true);
             setTitle(location.state.title.shortcutName);
@@ -25,37 +28,50 @@ function Add (){
             setAmount(location.state.amount.shortcutAmount);
             setId(location.state.id.shortcutId);
 
-            console.log(location.state );
+            console.log(location.state);
             
             navigate(location.pathname, { replace: true, state: null });
+            setResultText("");
         }
         }, []);
 
-   
-    
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-
-        if (!shortcutEditMode){
-            // Add by itself
-            try {
+    const handleAddExpence = async () =>{
                 const result = await axios.post('http://localhost:5000/home/addexpense', {
                 title: title,
                 description: description,
                 amount: amount,
                 userId: localStorage.getItem("userId")
                 });
-                console.log(result);
 
-            } catch (err){
-                console.log(err);
+                console.log(result);
+                clearForm();
+
+                setResultText("Successfully Added Expenses")
+                const resultTextStyling = document.getElementById('resultText')
+                resultTextStyling.style.color = "rgb(148, 245, 68);"
+    }
+    
+    function handleError(error){
+        setResultText(`Error: ${error.response.data.message ? error.response.data.message : 'Server error'}`)
+        const resultTextStyling = document.getElementById('resultText')
+        resultTextStyling.style.color = "rgb(228, 67, 39);"
+    }
+    
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        if (!shortcutEditMode){
+            try {
+                handleAddExpence();
+            } catch (error){
+                handleError(error);
             }
         } else if (shortcutEditMode){
             // Edit shortcut
             try {
                 // input edit request here
-            } catch (err){
-                console.log(err);
+            } catch (error){
+                console.log(error);
             }
         }
         
@@ -90,7 +106,8 @@ function Add (){
             <div className={styles.control}><p>EXIT: </p> <Link to="/">MENU</Link></div>
             <div className={styles.control}><p>CLEAR: </p><button onClick={ clearForm }>CLEAR</button></div>
         </div>
-        
+
+        <div className={styles.resultTextContainer}><h4 className={styles.resultText} id='resultText'>{resultText}</h4></div>
         </form>
       </div>  
     );

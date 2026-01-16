@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom"
 import styles from './Home.module.css';
 import { useEffect, useState, useRef } from "react";
+import axios from "axios";
 import LongPressButton from "../Utility/LongPressButton";
 import Add from "./Add/Add";
 
@@ -11,7 +12,7 @@ function Home() {
   const [displayTimeline, setDisplayTimeline] = useState("TODAY");
   const [shortcutName, setShortcutName] = useState("SHORTCUTS")
   const [shortcutEditMode, setShortcutEditMode] = useState(false)
-
+  const [timelineIndex, setTimelineIndex] = useState(0);
   
 useEffect(()=>{
   console.log("I am refreshiing")
@@ -21,6 +22,8 @@ useEffect(()=>{
     const username = localStorage.getItem("username").toUpperCase();
     setDisplayUsername(username)
   }
+
+  getTotalExpence();
 
 },[])
 
@@ -83,23 +86,30 @@ useEffect(()=>{
     { label: "THIS MONTH", value: "month" },
     { label: "THIS YEAR", value: "year" },
   ];
-  const [timelineIndex, setTimelineIndex] = useState(0);
+  
 
-  const toggleTimeline = async () => {
+  const getTotalExpence = async ()=>{
+          try{  
+            const userId = localStorage.getItem("userId");
+            const time = timelines[timelineIndex].value;
+
+            const result = await axios.get(`http://localhost:5000/home/totalexpense?userId=${userId}&time=${time}`);
+
+            console.log(result);
+
+            setAmount(result.data.data.amount);
+
+          } catch (error) {
+            console.log(error);
+          }
+  }
+
+  const toggleTimeline = () => {
      setTimelineIndex((prev) => (prev + 1) % timelines.length);
+     console.log(timelineIndex)
      setDisplayTimeline(timelines[timelineIndex].label);
 
-     try{               
-            const result = await axios.post('http://localhost:5000/home/totalExpenses', {
-          
-          });
-     
-           
-          
-        } catch (error) {
-          
-        }
-
+    getTotalExpence();
   }
     
 
@@ -155,18 +165,6 @@ useEffect(()=>{
     holdTimeout.current = null;
   };
 
- const getTotalCost = async (e) => {
-        e.preventDefault();
-        try{                
-            const result = await axios.get('http://localhost:5000/auth/login', {
-            
-          });
-          
-        } catch (error) {
-            handleLoginFailure(error);
-        }
-        
-    }
 
   return (
    <div className={styles.pageContainer}>
