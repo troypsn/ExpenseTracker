@@ -12,6 +12,7 @@ function Home() {
   const [shortcutName, setShortcutName] = useState("SHORTCUTS")
   const [shortcutEditMode, setShortcutEditMode] = useState(false)
   const [timelineIndex, setTimelineIndex] = useState(0);
+  const [shortcuts, setShortcuts] = useState([]);
   
 useEffect(()=>{
   console.log("I am refreshiing")
@@ -24,60 +25,11 @@ useEffect(()=>{
 
   getTotalExpence();
 
+  getShortcuts();
+
 },[])
 
  
-
- const shortcuts = [
-    // {
-    //   id : 1,
-    //   name: "SNACK",
-    //   desc: "Eat",
-    //   amount: 50
-    // },
-    // {
-    //   id : 2,
-    //   name: "FOOD",
-    //   desc: "Eat",
-    //   amount: 100
-    // },
-    // {
-    //   id : 3,
-    //   name: "BILLS",
-    //   desc: "Electricity",
-    //   amount: 500
-    // },
-    // {
-    //   id : 4,
-    //   name: "RENT",
-    //   desc: "Dorm",
-    //   amount: 2000
-    // },
-    // {
-    //   id : 5,
-    //   name: "COMMUTE",
-    //   desc: "Jeep",
-    //   amount: 75
-    // },
-    // {
-    //   id : 6,
-    //   name: "COFFEE",
-    //   desc: "Beverage",
-    //   amount: 100
-    // }
-  ]
-
-    function handleShortcutClick(shortcutName, shortcutDesc, shortcutAmount, shortcutId){
-      if(shortcutEditMode){
- 
-          navigate('/add', {state: {title : {shortcutName}, description : {shortcutDesc}, amount :{shortcutAmount}, id :{shortcutId}}})
-        
-        
-      } else {
-        setAmount((prev)=> prev + shortcutAmount);
-      }
-    }
-     
   
   //handle type of filter
   const timelines = [
@@ -105,21 +57,85 @@ useEffect(()=>{
           }
   }
 
+  const refreshTotalExpence = async ()=>{
+          try{  
+            const userId = localStorage.getItem("userId");
+            const index = (timelineIndex - 1 ) == -1 ? (timelines.length - 1): timelineIndex - 1 ;
+            const time = timelines[index].value;
+
+            const result = await axios.get(`http://localhost:5000/home/totalexpense?userId=${userId}&time=${time}`);
+
+            console.log(result);
+            const fetchedAmount = result.data.data.amount ? result.data.data.amount : 0;
+            setAmount(fetchedAmount);
+
+          } catch (error) {
+            console.log(error);
+          }
+  }
+
+  const getShortcuts = async ()=>{
+        try{
+          const  userId = localStorage.getItem("userId");
+          const result = await axios.get(`http://localhost:5000/home/getshortcuts?userId=${userId}`)
+          const shortcuts = result.data.data.result;
+          setShortcuts(shortcuts)
+          console.log(shortcuts);
+
+        } catch(error){
+          console.log(error);
+        }
+  }
+
+  async function addExpense (shortcutName, shortcutDesc, shortcutAmount){
+     try{
+          const result = await axios.post('http://localhost:5000/home/addexpense', {
+                        title: shortcutName,
+                        description: shortcutDesc,
+                        amount: shortcutAmount,
+                        userId: localStorage.getItem("userId")
+                    });
+                    console.log(result);
+        } catch(error){
+          console.log(error);
+        }
+    }
+  
+
   const toggleTimeline = () => {
      setTimelineIndex((prev) => (prev + 1) % timelines.length);
      console.log(timelineIndex)
      setDisplayTimeline(timelines[timelineIndex].label);
 
-    getTotalExpence();
+      getTotalExpence();
+    
   }
     
+  //functions for shortcut presses
+
+    function handleShortcutClick(shortcutName, shortcutDesc, shortcutAmount, shortcutId){
+      if(shortcutEditMode){
+          navigate('/add', {state: {title : {shortcutName}, description : {shortcutDesc}, amount :{shortcutAmount}, id :{shortcutId}}})
+      } else{
+        // post the following shortcutName, shortcutDesc, shortcutAmount, shortcutId -> transactions table
+        //run getTotalExpence after the post.
+        console.log("shortclick!")
+         addExpense(shortcutName, shortcutDesc, shortcutAmount);
+
+         //refresh the total expence
+         setTimeout(()=>{
+          getTotalExpence();
+        }, 100)
+
+      }
+    }
 
   
 
     //handle shortcut long and short presses
 
   const shortcutShortPress = () =>{
-    //insert switching modules for shortcuts
+    navigate('/add', {state: {shortcutAddMode: true}});
   }
 
   const shortcutLongPress = () =>{
@@ -189,16 +205,16 @@ useEffect(()=>{
             style={{ userSelect: "none", touchAction: "none", cursor: "pointer" }}
           >
             {shortcutName}
-          </p><p></p> <Link to={'/add'}><p>ADD</p></Link>
+          </p><p></p> <Link to={'/add'}><p>ADD EXPENSE</p></Link>
           </div>
           <div className={styles.shortcutsContainer}>
 
               {shortcuts.map((shortcut)=>{
                 return ( 
                 <div onClick={()=>{
-                  handleShortcutClick(shortcut.name,shortcut.desc, Number(shortcut.amount) , shortcut.id);
+                  handleShortcutClick(shortcut.title, shortcut.description, Number(shortcut.amount) , shortcut.shortcutId);
                 }}className={styles.shortcut} id={shortcut.id}>
-                  <p className={styles.shortcutTitle}>{shortcut.name}</p>
+                  <p className={styles.shortcutTitle}>{shortcut.title}</p>
                   <p className={styles.shortcutAmount}>{shortcut.amount}</p>
                 </div>
               )

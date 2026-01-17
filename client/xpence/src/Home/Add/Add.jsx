@@ -15,13 +15,17 @@ function Add (){
     const [amount, setAmount] = useState("");
     const [id, setId] = useState(null);
     const [shortcutEditMode, setShortcutEditMode] = useState(false);
+    const [shortcutAddMode, setShortcutAddMode] = useState(false);
+    const [expenceAddMode, setExpenceAddMode] = useState(false);
     const [resultText, setResultText] = useState("");
+    
 
 
      useEffect(() => {
 
         //If in edit shortcut mode, the shortcut details is passed through from Homejsx to here
         if (location.state?.title?.shortcutName) {
+            console.log("Shortcut Edit Mode");
             setShortcutEditMode(true);
             setTitle(location.state.title.shortcutName);
             setDescription(location.state.description.shortcutDesc);
@@ -32,7 +36,15 @@ function Add (){
             
             navigate(location.pathname, { replace: true, state: null });
             setResultText("");
-        }
+
+        } else if (location.state?.shortcutAddMode) {
+            setShortcutAddMode(true)
+            console.log("Shortcut Add Mode")
+    
+        } else {
+            setExpenceAddMode(true);
+            console.log("Expence Add Mode")
+        }   
         }, []);
 
     const handleAddExpence = async () =>{
@@ -50,14 +62,24 @@ function Add (){
                 const resultTextStyling = document.getElementById('resultText')
                 resultTextStyling.style.color = "rgb(148, 245, 68);"
     }
+
+    const handleShortCutEdit = async ()=>{
+        //insert UPDATE axios here
+    }
+
+    const handleShortCutAdd = async ()=>{
+        //insert POST axios here
+    }
     
     function handleError(error){
         setResultText(`Error: ${error.response.data.message ? error.response.data.message : 'Server error'}`)
         const resultTextStyling = document.getElementById('resultText')
         resultTextStyling.style.color = "rgb(228, 67, 39);"
     }
+
     
     const handleSubmit = async (e) => {
+
         e.preventDefault();
 
         if (!shortcutEditMode){
@@ -73,6 +95,8 @@ function Add (){
             } catch (error){
                 console.log(error);
             }
+        }else if (shortcutAddMode){
+
         }
         
         

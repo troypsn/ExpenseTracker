@@ -84,8 +84,24 @@ switch (time) {
     })
   }
 
+  const getShortcuts = (req, res)=>{
+      const userId = req.query.userId;
+      const query = `SELECT shortcutId, amount, title, description FROM shortcuts WHERE userid = ${userId}`
+  
+      db.query(query, (error, result)=>{
+          if(error){
+              console.log(error);
+              res.status(408).send(error)
+          } else {
+              console.log(result)
+              res.json({sucessful: true, data: {result}}).status(200);
+          }
+      })
+  }
+
 
 module.exports = {
     addExpense,
-    totalExpense
+    totalExpense,
+    getShortcuts
 }
