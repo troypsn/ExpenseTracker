@@ -13,7 +13,7 @@ function Add (){
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [amount, setAmount] = useState("");
-    const [id, setId] = useState(null);
+    const [shortcutId, setShortcutId] = useState(null);
     const [shortcutEditMode, setShortcutEditMode] = useState(false);
     const [shortcutAddMode, setShortcutAddMode] = useState(false);
     const [expenceAddMode, setExpenceAddMode] = useState(false);
@@ -30,7 +30,7 @@ function Add (){
             setTitle(location.state.title.shortcutName);
             setDescription(location.state.description.shortcutDesc);
             setAmount(location.state.amount.shortcutAmount);
-            setId(location.state.id.shortcutId);
+            setShortcutId(location.state.id.shortcutId);
 
             console.log(location.state);
             
@@ -49,10 +49,10 @@ function Add (){
 
     const handleAddExpence = async () =>{
                 const result = await axios.post('http://localhost:5000/home/addexpense', {
-                title: title,
-                description: description,
-                amount: amount,
-                userId: localStorage.getItem("userId")
+                    title: title,
+                    description: description,
+                    amount: amount,
+                    userId: localStorage.getItem("userId")
                 });
 
                 console.log(result);
@@ -64,11 +64,38 @@ function Add (){
     }
 
     const handleShortCutEdit = async ()=>{
-        //insert UPDATE axios here
+            const result = await axios.post('http://localhost:5000/home/editshorcut', {
+                title: title,
+                description: description,
+                amount: amount,
+                userId: localStorage.getItem("userId"),
+                shortcutId : shortcutId
+            });
+
+            console.log(result);
+
+            clearForm();
+
+            setResultText(`Successfully Edited ${title} Shortcut`)
+            const resultTextStyling = document.getElementById('resultText')
+            resultTextStyling.style.color = "rgb(148, 245, 68);"
     }
 
-    const handleShortCutAdd = async ()=>{
-        //insert POST axios here
+    const handleShortcutAdd = async ()=>{
+            const result = await axios.post( 'http://localhost:5000/home/addshortcut',{
+                    title: title,
+                    description: description,
+                    amount: amount,
+                    userId: localStorage.getItem("userId")
+            });
+
+            console.log(result);
+
+            clearForm();
+
+            setResultText(`Successfully Added ${title} Shortcut`)
+            const resultTextStyling = document.getElementById('resultText')
+            resultTextStyling.style.color = "rgb(148, 245, 68);"
     }
     
     function handleError(error){
@@ -77,26 +104,29 @@ function Add (){
         resultTextStyling.style.color = "rgb(228, 67, 39);"
     }
 
-    
     const handleSubmit = async (e) => {
 
         e.preventDefault();
+    
 
-        if (!shortcutEditMode){
+        if (expenceAddMode){
             try {
                 handleAddExpence();
             } catch (error){
                 handleError(error);
             }
-        } else if (shortcutEditMode){
-            // Edit shortcut
+        } else if (shortcutAddMode){
             try {
-                // input edit request here
+                handleShortcutAdd();
             } catch (error){
                 console.log(error);
             }
-        }else if (shortcutAddMode){
-
+        }else if (shortcutEditMode){
+             try {
+                handleShortCutEdit();
+            } catch (error){
+                console.log(error);
+            }
         }
         
         
@@ -105,7 +135,7 @@ function Add (){
         setTitle("")
         setDescription("")
         setAmount("")
-        setId(null)
+        setShortcutId(null)
     }
   
 

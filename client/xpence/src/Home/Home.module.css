@@ -83,7 +83,7 @@
 .shortcutsContainer{
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: flex-start;
     gap: 6rem;
     margin: 0rem 15vw;
 }

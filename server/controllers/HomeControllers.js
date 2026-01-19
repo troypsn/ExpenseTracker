@@ -12,7 +12,7 @@ const addExpense = (req, res) => {
         res.json(err).status(401)
     } else 
     if(result){
-        res.json({successful: true , message: "Successfully added into transactions"}).status(200);
+        res.json({successful: true , message: `Successfully added ${title}  into transactions`}).status(200);
     }
   });
 }
@@ -99,9 +99,38 @@ switch (time) {
       })
   }
 
+const addShortcut = (req, res)=>{
+    const { title, description, amount, userId } = req.body;
+    const query = `INSERT INTO shortcuts (userId, title, amount, description) VALUES ("${userId}", "${title}", ${Number(amount)}, "${description}")`;
+
+    db.query(query, (error, result)=>{
+        if(error){
+            console.log(error);
+            res.status(502).send(error)
+        } else if(result){
+        res.json({successful: true , message: `Successfully added ${title} into shortcuts`}).status(200);
+    }
+    })
+}
+
+const editShorcut = (req, res) =>{
+    const { title, description, amount, userId, shortcutId} = req.body;
+    const query = `UPDATE shortcuts SET title = '${title}', description = '${description}', amount = '${amount}' WHERE shortcutId = ${shortcutId}`
+
+    db.query(query, (error, result)=>{
+        if (error) {
+            console.log(error)
+            res.status(502).send(error)
+        } else if (result){
+            res.json({successful: true , message: `Successfully edited the shortcut ${title}`}).status(200);
+        }
+    })
+}
 
 module.exports = {
     addExpense,
     totalExpense,
-    getShortcuts
+    getShortcuts,
+    addShortcut,
+    editShorcut
 }

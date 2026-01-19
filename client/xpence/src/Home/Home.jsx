@@ -124,13 +124,11 @@ useEffect(()=>{
 
          //refresh the total expence
          setTimeout(()=>{
-          getTotalExpence();
+          refreshTotalExpence();
         }, 100)
 
       }
     }
-
-  
 
     //handle shortcut long and short presses
 
