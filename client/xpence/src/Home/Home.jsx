@@ -29,7 +29,6 @@ useEffect(()=>{
 
 },[])
 
- 
   
   //handle type of filter
   const timelines = [
@@ -61,6 +60,7 @@ useEffect(()=>{
           try{  
             const userId = localStorage.getItem("userId");
             const index = (timelineIndex - 1 ) == -1 ? (timelines.length - 1): timelineIndex - 1 ;
+            
             const time = timelines[index].value;
 
             const result = await axios.get(`http://localhost:5000/home/totalexpense?userId=${userId}&time=${time}`);
@@ -184,7 +184,7 @@ useEffect(()=>{
   return (
    <div className={styles.pageContainer}>
       <div className={styles.header}>
-        <Link to={'/'}><p>MENU</p></Link>  <Link to={'/'}><p>__XPENCE__</p></Link> <Link to={'/'}><p>{displayUsername}</p></Link>
+        <Link to={'/'}><p>MENU</p></Link>  <Link to={'/view'}><p>__XPENCE__</p></Link> <Link to={'/settings'}><p>{displayUsername}</p></Link>
       </div>
       <div className={styles.screenContainer}>
             <div className={styles.screen} onClick={() =>{toggleTimeline();}}>

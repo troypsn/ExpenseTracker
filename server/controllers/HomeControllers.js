@@ -127,10 +127,25 @@ const editShorcut = (req, res) =>{
     })
 }
 
+const deleteShortcut = (req, res) =>{
+    const { title, shortcutId} = req.body;
+    const query = `DELETE FROM shortcuts WHERE shortcutId = ${shortcutId}`
+
+    db.query(query, (error, result)=>{
+        if (error) {
+            console.log(error)
+            res.status(502).send(error)
+        } else if (result){
+            res.json({successful: true , message: `Successfully edited the shortcut ${title}`}).status(200);
+        }
+    })
+}
+
 module.exports = {
     addExpense,
     totalExpense,
     getShortcuts,
     addShortcut,
-    editShorcut
+    editShorcut,
+    deleteShortcut
 }

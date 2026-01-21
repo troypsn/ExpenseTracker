@@ -137,6 +137,30 @@ function Add (){
         setAmount("")
         setShortcutId(null)
     }
+
+    const deleteShortcut = async () =>{
+        try{
+                const result = await axios.post( 'http://localhost:5000/home/deleteshortcut',{
+                        title: title,
+                        description: description,
+                        amount: amount,
+                        userId: localStorage.getItem("userId"),
+                        shortcutId: shortcutId
+                });
+
+            console.log(result);
+            clearForm();
+            setResultText(`Successfully DELETED ${title} Shortcut`)
+            const resultTextStyling = document.getElementById('resultText')
+            resultTextStyling.style.color = "rgb(148, 245, 68);"
+
+            }   catch(error){
+            console.log(error)
+            }
+
+           
+        } 
+        
   
 
     
@@ -157,7 +181,10 @@ function Add (){
         </div>
 
          <div className={styles.controlContainer}>
-            <div className={styles.control}><p>EXIT: </p> <Link to="/">MENU</Link></div>
+            <div className={styles.control}><p>{shortcutEditMode ? "DELETE" : "EXIT"}:</p>
+            {shortcutEditMode ? <p onClick={ ()=> deleteShortcut()}> DELETE </p> :  <Link to="/">{shortcutEditMode ? "DELETE" : "MENU"}</Link>}
+        </div>
+
             <div className={styles.control}><p>CLEAR: </p><button onClick={ clearForm }>CLEAR</button></div>
         </div>
 

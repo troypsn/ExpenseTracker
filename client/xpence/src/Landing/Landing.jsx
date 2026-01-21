@@ -3,8 +3,6 @@ import styles from './Landing.module.css';
 import { Link } from "react-router-dom";
 import LoggedIn from './LoggedIn';
 
-
-
 function Landing() {
   useEffect(()=>{
     const navItems = document.querySelectorAll(`.${styles.navItem}`);
@@ -32,13 +30,6 @@ function Landing() {
   })
 
 
-    
-
-    
-
-    
-
-
   return (
     <div className={styles.pageContainer}>
         <div className={styles.header}>
@@ -58,7 +49,6 @@ function Landing() {
             <p className={styles.arrow}>▶︎</p>
             <div className={styles.navText}><Link to={'/about'} className={styles.linkStyle}><h3>ABOUT</h3></Link></div>
           </div>
-
         </div>
     </div>
   )

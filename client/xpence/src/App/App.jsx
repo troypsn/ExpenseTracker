@@ -6,7 +6,8 @@ import SignUp from '../SignUp/SignUp.jsx';
 import About from '../About/About.jsx';
 import Add from '../Home/Add/Add.jsx';
 import Home from '../Home/Home.jsx';
-import LoginRoute from '../Utility/LoginRoute.jsx';
+import View from '../View/View.jsx';
+import Settings from '../Settings/Settings.jsx';
 
 
 
@@ -20,6 +21,8 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/home" element={<Home/>}/> 
         <Route path="/add" element={<Add/>}/>
+        <Route path="/settings" element={<Settings/>}/>
+        <Route path="/view" element={<View/>}/>
       </Routes>
     </div>
   );
