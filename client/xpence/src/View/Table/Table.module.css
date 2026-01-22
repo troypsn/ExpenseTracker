@@ -1,0 +1,20 @@
+.tableContainer{
+    width: 80vw;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+    justify-content: flex-start; 
+    overflow-y: auto;           
+}   
+
+td{
+    text-align: center;
+    padding: 2rem;
+    border: 1px white solid;
+}
+ 
+
+th{
+    padding: 1rem;
+}
