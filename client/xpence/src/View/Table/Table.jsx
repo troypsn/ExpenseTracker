@@ -4,6 +4,7 @@ import axios from "axios";
 
 function Table() {
 
+
   useEffect(()=>{ 
       const userId = localStorage.getItem("userId");
       const fetchTransactions = async ()=>{
@@ -23,24 +24,27 @@ function Table() {
   },[])
   
   const [transactions, setTransactions] = useState([]);
+  const [search, setSearch] = useState('');
 
   const handleDelete = async (transactionId) => {
   try {
-    await axios.delete(`http://localhost:5000/transaction/${transactionId}`);
+    const result = await axios.delete(`http://localhost:5000/view/deletetransaction/${transactionId}`);
     setTransactions(prev =>
       prev.filter(tx => tx.transactionId !== transactionId)
     );
+
+    console.log(result.data.deletedId)
   } catch (err) {
     console.error(err);
   }
 
-  
 
   
   
 };
   return (
     <div className={styles.tableContainer}>
+      <input type="text" className={styles.filterInput} onChange={(e)=>{setSearch(e.target.value)}} placeholder='Filter Here' />
       <table>
           <thead>
             <tr>
@@ -57,7 +61,14 @@ function Table() {
                 <td colSpan="5">No transactions found</td>
               </tr>
             ) : (
-              transactions.map(tx => (
+              transactions.filter((tx)=>{
+                const lowerSearch = search.toLowerCase();
+
+                return lowerSearch === '' ? tx : tx.title.toLowerCase().includes(lowerSearch) ||
+                                      tx.description.toLowerCase().includes(lowerSearch) ||
+                                      tx.amount.toString().includes(lowerSearch) ||
+                                      new Date(tx.datecreated).toLocaleDateString().includes(lowerSearch);
+                }).map(tx => (
                 <tr key={tx.transactionId}>
                   <td>{tx.title}</td>
                   <td>{tx.description}</td>

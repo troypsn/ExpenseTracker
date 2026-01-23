@@ -12,13 +12,6 @@
     max-width: 1920px;
 }
 
-.header{
-    font-size: 1.2rem;
-    display: flex;
-    justify-content: space-around;
-    margin: 4rem 0rem;
-}
-
 .header p{
     text-align: center;
     width: 10rem;

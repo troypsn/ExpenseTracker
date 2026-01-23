@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom"
 import styles from './Home.module.css';
 import { useEffect, useState, useRef } from "react";
 import axios from "axios";
+import Header from "../Utility/Header/Header";
 
 
 function Home() {
@@ -183,9 +184,7 @@ useEffect(()=>{
 
   return (
    <div className={styles.pageContainer}>
-      <div className={styles.header}>
-        <Link to={'/'}><p>MENU</p></Link>  <Link to={'/view'}><p>__XPENCE__</p></Link> <Link to={'/settings'}><p>{displayUsername}</p></Link>
-      </div>
+      <Header></Header>
       <div className={styles.screenContainer}>
             <div className={styles.screen} onClick={() =>{toggleTimeline();}}>
                 <div className={styles.screenTitle}>TOTAL COST</div>

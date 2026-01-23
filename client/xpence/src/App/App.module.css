@@ -11,6 +11,9 @@ html {
       #1a1a2f 100%,
       #201818 100%
     );
+
+  -ms-overflow-style: none;  
+  scrollbar-width: none;  
 }
 
 .pageContainer {

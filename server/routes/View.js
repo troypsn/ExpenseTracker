@@ -5,19 +5,19 @@ const {getTransactions} = require('../controllers/View')
 
 router.get('/transactions', getTransactions)
 
-router.delete('/deletetransaction', (req, res) => {
-    const { transactionId } = req.query;
+router.delete('/deletetransaction/:id', (req, res) => {
+    const { id } = req.params;
 
-    if (!transactionId) {
+    if (!id) {
         return res.status(400).json({
             success: false,
             message: "transactionId is required"
         });
     }
 
-    const query = `DELETE FROM transactions WHERE transactionId = ?`;
+    const query = `DELETE FROM transactions WHERE transactionId = ${id}`;
 
-    db.query(query, [transactionId], (error, result) => {
+    db.query(query, (error, result) => {
         if (error) {
             console.error(error);
             return res.status(500).json({
@@ -25,17 +25,15 @@ router.delete('/deletetransaction', (req, res) => {
                 error
             });
         }
-
         if (result.affectedRows === 0) {
             return res.status(404).json({
                 success: false,
                 message: "Transaction not found"
             });
         }
-
-        res.status(200).json({
+        return res.status(200).json({
             success: true,
-            deletedId: transactionId
+            deletedId: id
         });
     });
 });
