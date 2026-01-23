@@ -1,0 +1,10 @@
+.pageContainer{
+    width: 60vw;
+    color: white;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+
+

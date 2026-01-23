@@ -2,6 +2,7 @@ import styles from './SignUp.module.css'
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
+import NavbarMenu from '../Utility/NavbarMenu/NavbarMenu';
 
 
 
@@ -46,12 +47,7 @@ export default function SignUp() {
 
   return (
     <div className={styles.pageContainer}>
-      <nav className={styles.navbar}>
-          <Link to={'/'} className={styles.linkStyle}><h3>MENU</h3></Link>
-          <Link to={'/login'} className={styles.linkStyle}><h3>LOGIN</h3></Link>
-          <Link to={'/signup'} className={styles.linkStyle}><h3>SIGN UP</h3></Link>
-          <Link to={'/about'} ><h3>ABOUT</h3></Link>
-      </nav>
+      <NavbarMenu></NavbarMenu>
 
       <form onSubmit={handleSubmit}>
         <div className={styles.inputContainer}>  

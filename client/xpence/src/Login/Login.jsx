@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import styles from './Login.module.css';
 import { Link, useNavigate } from 'react-router-dom';
+import NavbarMenu from '../Utility/NavbarMenu/NavbarMenu';
 function Login() {
 
   const [loginResult, setloginResult] = useState("");
@@ -49,12 +50,7 @@ function Login() {
 
   return (
     <div className={styles.pageContainer}>
-      <nav className={styles.navbar}>
-        <Link to={'/'} className={styles.linkStyle}><h3>MENU</h3></Link>
-          <Link to={'/login'} className={styles.linkStyle}><h3>LOGIN</h3></Link>
-          <Link to={'/signup'} className={styles.linkStyle}><h3>SIGN UP</h3></Link>
-          <Link to={'/about'} ><h3>ABOUT</h3></Link>
-      </nav>
+      <NavbarMenu></NavbarMenu>
       <form onSubmit={handleSubmit}>
         <div className={styles.inputContainer}>  
           <label htmlFor="username">Username:</label> <input type="text" placeholder='' name="username" required/>
