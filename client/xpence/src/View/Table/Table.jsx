@@ -43,47 +43,52 @@ function Table() {
   
 };
   return (
-    <div className={styles.tableContainer}>
-      <input type="text" className={styles.filterInput} onChange={(e)=>{setSearch(e.target.value)}} placeholder='Filter Here' />
-      <table>
-          <thead>
-            <tr>
-              <th>Title</th>
-              <th>Description</th>
-              <th>Amount</th>
-              <th>Date</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {transactions.length === 0 ? (
+    <div className={styles.pageContainer}>
+      <div className={styles.inputContainer}>
+          <input type="text" className={styles.filterInput} onChange={(e)=>{setSearch(e.target.value)}} placeholder='Filter Here' />
+      </div>
+       
+      <div className={styles.tableContainer}>
+        <table>
+            <thead>
               <tr>
-                <td colSpan="5">No transactions found</td>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Amount</th>
+                <th>Date</th>
+                <th>Action</th>
               </tr>
-            ) : (
-              transactions.filter((tx)=>{
-                const lowerSearch = search.toLowerCase();
-
-                return lowerSearch === '' ? tx : tx.title.toLowerCase().includes(lowerSearch) ||
-                                      tx.description.toLowerCase().includes(lowerSearch) ||
-                                      tx.amount.toString().includes(lowerSearch) ||
-                                      new Date(tx.datecreated).toLocaleDateString().includes(lowerSearch);
-                }).map(tx => (
-                <tr key={tx.transactionId}>
-                  <td>{tx.title}</td>
-                  <td>{tx.description}</td>
-                  <td>₱{tx.amount}</td>
-                  <td>{new Date(tx.datecreated).toLocaleDateString()}</td>
-                  <td>
-                    <button onClick={() => handleDelete(tx.transactionId)}>
-                      Delete
-                    </button>
-                  </td>
+            </thead>
+            <tbody>
+              {transactions.length === 0 ? (
+                <tr>
+                  <td colSpan="5">No transactions found</td>
                 </tr>
-              ))
-            )}
-          </tbody>
-        </table>
+              ) : (
+                transactions.filter((tx)=>{
+                  const lowerSearch = search.toLowerCase();
+
+                  return lowerSearch === '' ? tx : tx.title.toLowerCase().includes(lowerSearch) ||
+                                        tx.description.toLowerCase().includes(lowerSearch) ||
+                                        tx.amount.toString().includes(lowerSearch) ||
+                                        new Date(tx.datecreated).toLocaleDateString().includes(lowerSearch);
+                  }).map(tx => (
+                  <tr key={tx.transactionId}>
+                    <td>{tx.title}</td>
+                    <td>{tx.description}</td>
+                    <td>₱{tx.amount}</td>
+                    <td>{new Date(tx.datecreated).toLocaleDateString()}</td>
+                    <td>
+                      <button onClick={() => handleDelete(tx.transactionId)}>
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+      </div>
     </div>
   )
 }

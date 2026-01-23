@@ -1,15 +1,22 @@
+
 .tableContainer{
     margin-top: 4rem;
     width: 100%;
     display: flex;
-    flex-direction: column;
+    flex-direction: column-reverse;
     gap: 1rem;
     align-items: center;
     justify-content: center; 
     overflow-y: auto;           
 }   
-table{
+
+.inputContainer{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
+
 td{
     text-align: center;
     padding: 2rem;
